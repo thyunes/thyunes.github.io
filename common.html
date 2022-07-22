@@ -12,45 +12,7 @@
 
 <body>
 
-<script language="JavaScript" type="text/javascript">
-<!--
-var num = 8;
-var divtype = new Array(num);
-divtype[0] = "adrblocka"; 
-divtype[1] = "adrblockc";
-divtype[2] = "adrblockb";
-divtype[3] = "adrblockd";
-divtype[4] = "adrblocke";
-divtype[5] = "adrblockf";
-divtype[6] = "adrblockg";
-divtype[7] = "adrblockh";
-function div(op1, op2) {
-  return ((op1 - (op1 % op2))/op2);
-}
-function pickRandom(range) 
-{
-  // Too random!!!
-  //if (Math.random)
-  //  return Math.round(Math.random() * (range-1));
-  //else {
-  //  var now = new Date();
-  //  return (now.getTime() / 1000) % range;
-  //}
-
-  // Chosen image depends on the day of the month: getDate = 1..31
-  var now = new Date();
-  //return (div(now.getDate(),7) % range);
-  //return (now.getDate() % range);
-  return (2);
-}
-var choice = pickRandom(num);
--->
-</script>
-
-<!-- THIS IS THE PREVIOUS HEADER -->
-<script language="JavaScript">
-document.writeln('<div id="'+divtype[choice]+'">');
-</script>
+<div id="adrblockb">
 
 <div style="float: left; width: 35%;">
 <img src="images/thy-smile-white-386h.jpg" border=0 align=top>
