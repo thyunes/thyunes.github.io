@@ -1,0 +1,52 @@
+param T;
+set Horizon := 0..T;
+set Crops;
+param TotalArea;
+param InitialArea;
+param InitialMoney;
+param PlowCost;
+param Growth{Crops};
+param Cost{Crops};
+param Revenue{Crops};
+
+var Plant{Crops,Horizon} integer >= 0;
+var Area{Horizon} >= 0, <= TotalArea;
+var Money{Horizon} >= 0;
+
+maximize z: Money[T] + 4*PlowCost;
+
+subject to
+
+area0: Area[0] = InitialArea + sum {i in Crops} Plant[i,0];
+area{t in 1..T}:  Area[t] = Area[t-1]
+                            + sum {i in Crops} Plant[i,t]
+                            - sum {i in Crops : t >= Growth[i]} Plant[i,t-Growth[i]];
+
+money0: Money[0] = InitialMoney - sum {i in Crops} (PlowCost + Cost[i])*Plant[i,0];
+money{t in 1..T}: Money[t] = Money[t-1]
+                             - sum {i in Crops} (PlowCost + Cost[i])*Plant[i,t]
+                             + sum {i in Crops : t >= Growth[i]} Revenue[i]*Plant[i,t-Growth[i]];
+
+data;
+
+param T = 36;
+set Crops := SB EP WH SY;
+param TotalArea := 144;
+param InitialArea := 0;
+param InitialMoney := 323;
+param PlowCost := 15;
+
+param:
+     Growth   Cost   Revenue :=
+SB      1      10       35
+EP     12      25       88
+WH     18      35      115
+SY      6      15       63;
+
+option solver cplex;
+option cplex_options 'absmipgap=0.0 mipgap=1.0e-9 timing=1';
+solve;
+display z;
+display {i in Crops, t in Horizon : Plant[i,t] > 0} Plant[i,t];
+display Area,Money;
+

@@ -1,0 +1,28 @@
+
+Instance generator: geninst.pl
+Instance parameters: 10 50 200 25 0 20 10 40 20 75 1 1
+Objective: mindelay
+Technique: MIP (CPLEX 12.1.0)
+Time limit: 2h
+
+ Id       RLB       BLB       BUB  GAP(%)     Nodes     Time
+  1   127.800   151.000   151.000    0.00       730     3.31
+  2   113.867   150.000   150.000    0.00      6176    21.10
+  3*  234.175   317.000   317.000    0.00     15942    72.97
+  4   220.217   273.000   273.000    0.00   1514106  6804.76
+  5    53.650    74.000    74.000    0.00      1147     2.71
+  6   265.475   326.000   326.000    0.00    606075  3592.81
+  7   269.252   313.750   392.000   19.96   1808782  7200.00
+  8   203.692   258.000   258.000    0.00     23429   149.07
+  9   184.083   237.000   237.000    0.00    637206  1438.03
+ 10   332.423   399.736   408.000    2.03    684797  7200.00
+
+inf = infinity
+RLB = lower bound at root node
+BLB = best known lower bound
+BUB = best known upper bound; equal to "?" if no feasible solution found
+GAP(%) = (BUB-BLB)/BUB; equal to "-" when infeasible
+Time given in seconds on a Pentium 4, 3.8Ghz, 4GB RAM, under GNU/Linux
+
+* NOTE: Instance 3 had to have its machine capacity raised to 29 to become feasible.
+

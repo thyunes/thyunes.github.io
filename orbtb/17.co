@@ -1,0 +1,76 @@
+// 17.co
+// A Comet program to solve the 17x17 coloring challenge posted at
+// http://blog.computationalcomplexity.org/2009/11/17x17-challenge-worth-28900-this-is-not.html
+//
+// Author: Tallys Yunes
+// First naive version: x[i,j] variables, impose cardinality constraint for each
+// possible rectangle. Use first-fail labeling (definitely not a good idea).
+// Date: 12/8/09
+
+import cotfd;
+
+Solver<CP> cp();
+
+int M = 7;
+int N = 7;
+int C = 4;
+
+range Rows = 1..M;
+range Columns = 1..N;
+range Colors = 1..4;
+
+var<CP>{int} x[Rows,Columns](cp,Colors);
+
+int t0 = System.getCPUTime();
+int minoccur[Colors] = [0,0,0,0];
+int maxoccur[Colors] = [3,3,3,3];
+
+solve<cp> {
+
+  forall (i in 1..M-1, j in 1..N-1, a in 1..M-i, b in 1..N-j) {
+
+    var<CP>{int} aux[Colors] = [x[i,j],x[i+a,j],x[i,j+b],x[i+a,j+b]];
+
+    cp.post( cardinality(minoccur,aux,maxoccur), onDomains );
+  }
+
+  // These are the cells corresponding to the rectangle-free subset of size 74. We know we can
+  // set them all to the same color (e.g. 1) for a drastic reduction of the search space.
+  // Need to type in the correct the coordinates.
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+  //cp.post( x[ 1, 3] == 1 ); cp.post( x[ 1,13] == 1 ); cp.post( x[ 1,15] == 1 ); cp.post( x[ 1,16] == 1 );
+}
+using {
+  labelFF(x);
+}
+
+cout << "Total time: " << (System.getCPUTime() - t0)/1000 << " secs" << endl;
+cout << "Total fail: " << cp.getNFail() << endl;
+
+if (cp.getSolution() != null) {
+  cout << "Found feasible solution!" << endl;
+  cout << "Colors:" << endl;
+  forall (i in Rows) {
+    forall (j in Columns)
+      cout << x[i,j] << " ";
+    cout << endl;
+  }
+}
+else {
+  cout << "No solution found." << endl;
+}

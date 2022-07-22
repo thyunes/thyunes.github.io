@@ -1,0 +1,38 @@
+
+Instance generator: geninst.pl
+Instance parameters: 10 50 200 25 0 20 10 40 20 75 1 1
+Objective: makespan
+Technique: MIP (CPLEX 12.1.0)
+Time limit: 2h
+
+ Id       RLB       BLB       BUB  GAP(%)     Nodes     Time
+  1   185.000   185.000   185.000    0.00         0     0.83
+  2   184.000   184.000   184.000    0.00        90     1.84
+  3*  178.000   183.000   183.000    0.00     42001  1908.88
+  4   179.000   179.000   179.000    0.00     84551   265.03
+  5   173.000   173.000   173.000    0.00       142     0.83
+  6   185.000   185.000   185.000    0.00       502     2.45
+  7   188.000   188.000   188.000    0.00       255     3.70
+  8#  171.000   171.000         ?     inf    188100  7200.00
+  9   181.000   181.000   181.000    0.00       146     1.36
+ 10   170.000   170.000   170.000    0.00     36959   105.67
+
+inf = infinity
+RLB = lower bound at root node
+BLB = best known lower bound
+BUB = best known upper bound; equal to "?" if no feasible solution found
+GAP(%) = (BUB-BLB)/BUB; equal to "-" when infeasible
+Time given in seconds on a Pentium 4, 3.8Ghz, 4GB RAM, under GNU/Linux
+
+* NOTE: Instance 3 had to have its machine capacity raised to 29 to become feasible.
+
+# NOTE: If we let instance 8 run for 55 hours with the default MIP emphasis (balance
+  optimality and feasibility), we get BLB=172 and BUB=175 after 1,404,279 nodes.
+  The first feasible solution of value 186 is found after 2.7 hours and 282,285 nodes.
+  The best feasible solution (175) is found after 3.8 hours and 442,952 nodes.
+
+  If we run instance 8 for 55 hours with the MIP emphasis setting that looks for
+  hidden feasible solutions, we get BLB=172 and BUB=173 after 1,074,000 nodes.
+  The first feasible solution of value 186 is found after 2.5 hours and 282,285 nodes.
+  The best feasible solution (173) is found after 47 hours and 1,043,242 nodes.
+

@@ -1,0 +1,493 @@
+/* andreas01 - an open source xhtml/css website layout by Andreas Viklund  - http://andreasviklund.com . Free to use for any purpose as long as the proper credits are given to the original author.
+
+Version: 1.3 (Nov 28, 2005)
+
+Screen layout: */
+
+body{
+margin:0 auto;
+padding:0;
+font:90% Helvetica,Arial,sans-serif;
+/*font:76% "Georgia","Times New Roman",Times,serif;*/
+/* background:#f4f4f4 url(images/Beach01.jpg) no-repeat fixed top center; */
+/*background:#f4f4f4 url(images/bg.gif) top center repeat-y;*/
+/*background:#f4f4f4;*/
+background:#ffffff;
+color:#303030;
+text-align:center;
+}
+
+#wrap{
+background:#ffffff;
+color:#303030;
+margin: 20px auto;
+width:790px;
+/* filter:alpha(opacity=80);-moz-opacity:0.80;opacity:0.80;-khtml-opacity:0.80; */
+text-align:left;
+}
+
+#header{
+clear:both;
+margin:20px 0 0 0;
+padding:0;
+height:45px;
+}
+
+#header h1{
+width:250px;
+margin:0 0 10px 0;
+float:left;
+}
+
+#header p{
+width:500px;
+float:right;
+text-align:center;
+color:#a0a0a0;
+margin:0 0 10px 0;
+font-size:0.8em;
+line-height:1.2em;
+background-color:inherit;
+}
+
+#frontphoto{
+margin:0 0 10px 0;
+border:0;
+}
+
+
+.topimage { 
+   position: relative; 
+   width: 100%; /* for IE 6 */
+}
+
+.topimage h2 { 
+   position: absolute; 
+   top: 200px; 
+   left: 0; 
+   width: 100%; 
+}
+
+.imageContainer {
+       width:790px; 
+       height:527px; 
+       background-image: url(images/2017-without-tie-790.jpg);
+}
+
+#adrblocka{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: left;
+font-size: 1.1em;
+background-image: url(images/tallys00.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#ffffff;
+}
+
+#adrblocka h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblocka h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblockb{
+clear: both;
+/*padding: 3px;*/
+padding: 0px;
+border: 0;
+text-align: left;
+font-size: 1.2em;
+/*background-image: url(images/tallys-23.jpg);*/
+background-repeat: no-repeat;
+background-position: center center;
+height: 386px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#000000;
+/*background-color:#ffffff*/
+}
+
+#adrblockb h1 {
+margin: 92px 0 0px 0;
+font-size: 1.7em;
+}
+
+#adrblockb h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblockc{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: right;
+font-size: 1.1em;
+background-image: url(images/tallys02.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#ffffff;
+}
+
+#adrblockc h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblockc h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblockd{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: right;
+font-size: 1.1em;
+background-image: url(images/tallys03.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#ffffff;
+}
+
+#adrblockd h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblockd h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblocke{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: right;
+font-size: 1.1em;
+background-image: url(images/tallys04.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#ffffff;
+}
+
+#adrblocke h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblocke h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblockf{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: right;
+font-size: 1.1em;
+background-image: url(images/tallys05.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#ffffff;
+}
+
+#adrblockf h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblockf h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblockg{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: right;
+font-size: 1.1em;
+background-image: url(images/tallys06.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#000000;
+}
+
+#adrblockg h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblockg h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#adrblockh{
+clear: both;
+padding: 6px;
+border: 0;
+text-align: left;
+font-size: 1.1em;
+background-image: url(images/tallys07.jpg);
+background-repeat: no-repeat;
+background-position: right center;
+height: 197px;
+/*width: 760px;*/ /* removed to correct display on IE 6 */
+margin: 0 0 15px 0;
+color:#ffffff;
+}
+
+#adrblockh h1 {
+margin: 0 0 0px 0;
+font-size: 1.7em
+}
+
+#adrblockh h2 {
+font-size: 1.3em;
+font-weight: normal;
+margin: 0 0 10px 0;
+}
+
+#titlebox{
+display: inline-block;
+vertical-align: top;
+}
+
+#avmenu{
+clear:left;
+float:left;
+width:150px;
+margin:0 0 10px 0;
+padding:0;
+font-size:0.9em;
+}
+
+#avmenu ul{	
+list-style:none;
+width:150px;
+margin:0 0 20px 0;
+padding:0;
+font-size:1.1em;
+}	
+
+#avmenu li{
+margin-bottom:4px;
+}
+
+#avmenu li a{
+font-weight:bold;
+height:20px;
+text-decoration:none;
+color:#505050;
+display:block;
+padding:6px 0 0 10px;
+background:#f4f4f4;
+border-left:4px solid #cccccc;
+}	
+	
+#avmenu li a:hover{
+background:#eaeaea;
+color:#286ea0;
+border-left:4px solid #286ea0;
+}
+
+#avmenu li a img{
+padding:0 0 0 0;
+}
+
+.announce{
+margin:0 0 0 0;
+padding:5px;
+width:140px;
+color:#505050;
+background-color:#f4f4f4;
+line-height:0.6em;
+}
+
+.announcewhite{
+margin:0 0 0 0;
+padding:0px;
+width:140px;
+color:#505050;
+background-color:#ffffff;
+line-height:0.6em;
+}
+
+#extras{
+float:right;
+width:151px;
+margin:0 0 10px 0;
+padding:0;
+font-size:0.9em;
+line-height:1.5em;
+}
+
+#extras p{
+margin:0 0 1.5em 0;
+}
+
+#content{
+margin:0 160px 20px 160px;
+border-left:1px solid #f0f0f0;
+border-right:1px solid #f0f0f0;
+padding:0 10px 0 10px;
+line-height:1.6em;
+text-align:left;
+/*width:450px;*/
+}
+
+#content h2{
+font-size:1.5em;
+margin:0 0 0.5em 0;
+}
+
+#content img{
+padding:0px;
+display:inline;
+background:#ffffff;
+color:#ffffff;
+border:0px solid #ffffff;
+}
+
+
+#content dl {
+	margin: 0px 0px 1em 0px;
+}
+#content dt {
+	float: left;
+	width: 120px;
+	margin: 0px 0px 0px 0px;
+	text-align: right;
+	font-weight: bold;
+}
+#content dd {
+	display: block;
+	margin: 0px 0px 8px 150px;
+}
+
+
+h3{
+font-size:1.3em;
+margin:0 0 10px 0;
+}
+
+a{
+text-decoration:none;
+color:#286ea0;
+}
+
+a:hover{
+text-decoration:underline;
+color:#286ea0;
+}
+
+a img{
+border:0;
+}
+
+#footer{
+clear:both;
+margin:0 auto;
+padding:10px 0 20px 0;
+border-top:4px solid #f0f0f0;
+width:760px;
+text-align:center;
+color:#808080;
+font-size:0.9em;
+}
+
+#footer a{
+color:#808080;
+text-decoration:none;
+}
+
+#footer a:hover{
+text-decoration:underline;
+}
+
+
+.bot {
+margin: 8ex 0 0 0;
+color: #808080;
+}
+
+.bot a {
+color: #808080;
+text-decoration: none;
+}
+
+.bot a:hover {
+text-decoration: underline;
+}
+
+.left{
+margin:10px 10px 5px 0;
+float:left;
+}
+
+.right{
+margin:10px 0 5px 10px;
+float:right;
+}
+
+.textright{
+text-align:right;
+}
+
+.center{
+text-align:center;
+}
+.centerimg{
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 50%;
+}
+
+.small{
+font-size:0.8em;
+}
+
+.bold{
+font-weight:bold;
+}
+
+.hide{
+display:none;
+}

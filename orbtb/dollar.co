@@ -1,0 +1,36 @@
+import cotfd;
+
+Solver<CP> m();
+var<CP>{int} Cent(m,0..100);
+var<CP>{int} Nickel(m,0..20);
+var<CP>{int} Dime(m,0..10);
+var<CP>{int} Quarter(m,0..4);
+var<CP>{int} Halfdollar(m,0..2);
+
+Integer c(0);   // Counts number of solutions found
+
+solveall<m> {
+   m.post(Cent + 5*Nickel + 10*Dime + 25*Quarter + 50*Halfdollar == 100);
+} using {
+   labelFF(m);
+   c := c + 1;
+   if (Cent != 0) {
+      cout << Cent << " cent(s), ";
+   }
+   if (Nickel != 0) {
+      cout << Nickel << " nickel(s), ";
+   }
+   if (Dime != 0) {
+      cout << Dime << " dime(s), ";
+   }
+   if (Quarter != 0) {
+      cout << Quarter << " quarter(s), ";
+   }
+   if (Halfdollar != 0) {
+      cout << Halfdollar << " half-dollar(s)";
+   }
+   cout << endl;
+}
+cout << "Number of solutions = " << c << endl;
+cout << "#choices  = " << m.getNChoice() << endl;
+cout << "#fails    = " << m.getNFail() << endl;

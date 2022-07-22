@@ -1,0 +1,91 @@
+                                                                                                                                                                                                                                                                
+Path: archiver1.google.com!news1.google.com!newsfeed.stanford.edu!logbridge.uoregon.edu!msunews!not-for-mail
+From: "Paul A. Rubin" <ru...@msu.edu>
+Newsgroups: sci.op-research
+Subject: Re: Sensitivity Analysis question
+Date: 21 Aug 2003 15:52:16 GMT
+Organization: Michigan State University
+Lines: 77
+Message-ID: <Xns93DE7860F5E8Equantoid@35.8.2.20>
+References: <Pine.GSO.4.43L-024.0308211020320.22198-100000@complex.gsia.cmu.edu>
+NNTP-Posting-Host: sisyphus.bus.msu.edu
+X-AUTHid: rubin
+User-Agent: Xnews/5.04.25
+
+[posted and mailed]
+
+Tallys Hoover Yunes <tal...@cmu.edu> wrote in news:Pine.GSO.4.43L-
+024.0308211020320.22198-100...@complex.gsia.cmu.edu:
+
+> 
+> Hi,
+> 
+>   In the context of Linear Programming, if a constraint
+>   c1 has shadow price s1 and we change its RHS by d1
+>   (with d1 in the allowable range), the value of the
+>   optimal solution will change by s1*d1.
+> 
+>   My question is: when can this reasoning be extended
+>   to changing the RHS of more than 1 constraint at the
+>   same time? That is, if, in addition, constraint c2 has
+>   shadow price s2 and we change its RHS by d2 as well,
+>   will the value of the optimal solution change by
+>   s1*d1 + s2*d2?
+> 
+>   I know this is works sometimes because I tried some
+>   examples, but I remember that, in general, this is
+>   not true.
+> 
+>   I'd really appreciate if someone could give me an
+>   explanation about when this reasoning works and
+>   when it doesn't (if that is possible at all).
+>   Pointers to related literature are also welcome.
+> 
+>   Thanks a lot in advance.
+> 
+> Best,
+> Tallys
+> 
+> 
+
+What you are describing is sometimes referred to as "parametric 
+programming" in books on LP.
+
+Let b be the original RHS vector, s the vector of shadow prices at the 
+optimal solution and d the change vector.  Further, let B denote the 
+basis submatrix and Bi its inverse.  Then the objective change will be 
+exactly s'd if Bi*(b + d) >= 0.  If d violates at least one of those 
+inequalities, then s'd is a conservative bound on the change to the 
+objective (meaning the objective change is <= s'd in a max problem, >= 
+s'd in a min problem).
+
+While it is relatively easy to print a table of ranges for individual 
+changes, there does not seem to be a good way to capture this in software 
+output.  If you have a particular change vector d in mind a priori, 
+though, there is a trick you can use.  In the original LP, add a new 
+scalar variable t, change the constraints
+
+Ax ~ b (where ~ is some mix of <=, =, >=)
+
+to 
+
+Ax ~ b + t*d,
+
+and add the single constraint t = 0.  You will get the same optimal 
+solution x* (with t* = 0) that you would have gotten for the original 
+problem.  The shadow price of the new constraint will be s'd, and the 
+ranging table entry for the new constraint will tell you for what values 
+of t that shadow price applies.
+
+-- Paul
+
+*************************************************************************
+Paul A. Rubin                                  Phone:    (517) 432-3509
+Department of Management                       Fax:      (517) 432-1111
+The Eli Broad Graduate School of Management    E-mail:   ru...@msu.edu
+Michigan State University                      http://www.msu.edu/~rubin/
+East Lansing, MI  48824-1122  (USA)
+*************************************************************************
+Mathematicians are like Frenchmen:  whenever you say something to them,
+they translate it into their own language, and at once it is something
+entirely different.                                    J. W. v. GOETHE

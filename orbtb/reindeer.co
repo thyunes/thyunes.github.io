@@ -1,0 +1,54 @@
+import cotfd;
+
+Solver<CP> m();
+
+range R = 1..4;
+enum Lefty = {Dasher,Prancer,Comet,Donner};
+enum Righty = {Dancer,Vixen,Cupid,Blitzen};
+Righty favRighty[Lefty,R] = [[Dancer,Cupid,Vixen,Blitzen],
+                             [Vixen,Blitzen,Dancer,Cupid],
+                             [Cupid,Dancer,Blitzen,Vixen],
+                             [Blitzen,Vixen,Dancer,Cupid]];
+                            
+Lefty favLefty[Righty,R] = [[Prancer,Comet,Dasher,Donner],
+                            [Dasher,Donner,Prancer,Comet],
+                            [Prancer,Dasher,Comet,Donner],
+                            [Comet,Prancer,Donner,Dasher]];
+
+int rankLefty[Lefty,Righty];
+int rankRighty[Righty,Lefty];
+
+forall(m in Lefty,i in R)
+   rankLefty[m,favRighty[m,i]] = i;
+forall(w in Righty,i in R)
+   rankRighty[w,favLefty[w,i]] = i;
+
+var<CP>{Righty} rightPartner[Lefty](m,Righty);
+var<CP>{Lefty} leftPartner[Righty](m,Lefty);
+
+solveall<m> {
+   forall(i in Lefty)
+      m.post(leftPartner[rightPartner[i]] == i);
+
+   forall(i in Righty)
+      m.post(rightPartner[leftPartner[i]] == i);
+
+   forall(i in Lefty,j in Righty)
+      m.post(rankLefty[i,j] < rankLefty[i,rightPartner[i]] =>
+             rankRighty[j,leftPartner[j]] < rankRighty[j,i],onValues);
+
+   forall(i in Lefty,j in Righty)
+      m.post(rankRighty[j,i] < rankRighty[j,leftPartner[j]] =>
+             rankLefty[i,rightPartner[i]] < rankLefty[i,j],onValues);
+} using {
+   labelFF(m);
+
+   cout << endl;
+   forall(i in Lefty)
+      cout << Setw(10) << i;
+   cout << endl;
+
+   forall(i in Lefty,j in Righty : rightPartner[i] == j)
+      cout << Setw(10) << j;
+   cout << endl;
+}

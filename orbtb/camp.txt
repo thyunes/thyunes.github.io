@@ -1,0 +1,82 @@
+set Kids;                     # Set of kids' names
+set Camps;                    # Set of camps' names
+
+param Cost{Camps};            # Cost of each camp
+param Discount{Camps};        # Discount given by each camp after first kid
+param Hours{Camps};           # Number of hours of each camp
+param IsMental{Camps};        # Whether or not a camp develops mental abilities
+param IsPhysical{Camps};      # Whether or not a camp develops physical abilities
+param Conflict{Camps,Camps};  # Conflict[j1,j2] = if a kid cannot attend both c1 and c2
+param Preference{Kids,Camps}; # Preference[i,j] = rank of camp j according to kid i (1=favorite)
+
+param MentalReq{Kids};        # Minimum number of mental camps per kid
+param PhysicalReq{Kids};      # Minimum number of physical camps per kid
+param MinTimeReq{Kids};       # Minimum number of camp hours per kid
+param MaxTimeReq{Kids};       # Maximum number of camp hours per kid
+
+var x{Kids,Camps} binary;  # x[i,j] = 1 if kid i goes to camp j, 0 otherwise
+var y{Camps} binary;       # y[j] = 1 if the family sends someone to camp j, 0 otherwise
+
+# Minimize total cost
+minimize z: sum {i in Kids, j in Camps} (1-Discount[j])*Cost[j]*x[i,j] +
+            sum {j in Camps} Discount[j]*Cost[j]*y[j];
+
+subject to
+
+phys{i in Kids}:   sum {j in Camps} IsPhysical[j]*x[i,j] >= PhysicalReq[i];
+mental{i in Kids}: sum {j in Camps}   IsMental[j]*x[i,j] >= MentalReq[i];
+minhr{i in Kids}:  sum {j in Camps}      Hours[j]*x[i,j] >= MinTimeReq[i];
+maxhr{i in Kids}:  sum {j in Camps}      Hours[j]*x[i,j] <= MaxTimeReq[i];
+
+prefer{i in Kids, j1 in Camps, j2 in Camps : Preference[i,j2] > Preference[i,j1]}:
+       x[i,j2] + y[j1] - x[i,j1] <= 1;
+
+conflict{i in Kids, j1 in Camps, j2 in Camps : Conflict[j1,j2] = 1}: x[i,j1] + x[i,j2] <= 1;
+
+link{i in Kids, j in Camps}: x[i,j] <= y[j];
+
+data;
+
+set Kids  := Amy Beth Cathy David Earl Fred;
+set Camps := Math Chess Nature Craft Cook Gym Soccer Tennis Dive Fish;
+
+param:
+        Cost  Discount  Hours  IsMental  IsPhysical :=
+Math    1100    0.30      80       1          0
+Chess   1100    0.20      80       1          0
+Nature  1350    0.18      60       1          0
+Craft   1050    0.10      80       1          0
+Cook    1400    0.15      60       1          0
+Gym     1200    0.10      90       0          1
+Soccer  1000    0.10      80       0          1
+Tennis  1100    0.10      80       0          1
+Dive    1200    0.15      80       0          1
+Fish    1200    0.15      80       0          1;
+
+param:
+        MentalReq  PhysicalReq  MinTimeReq  MaxTimeReq:=
+Amy         2           1          160          360
+Beth        2           2          160          360
+Cathy       1           2          160          360
+David       2           1          160          360
+Earl        1           2          160          360
+Fred        3           1          160          360;
+
+param Preference:
+          Math Chess Nature Craft Cook Gym Soccer Tennis Dive Fish :=
+Amy         1    2      3     4     5   6     7      8     9   10
+Beth        3    2      7    10     8   1     5      6     4    9
+Cathy       1    4      2     7    10   9     5      6     3    8     
+David       3    9      8     7     6   5     4     10     2    1
+Earl        2    4      6     8     9   5     1      3    10    7
+Fred        4   10      9     6     5   3     1      2     7    8;
+
+param Conflict default 0 :=
+[*,*]  Nature,Soccer 1  Soccer,Tennis 1;
+
+option solver cplexamp;
+option cplex_options 'absmipgap=0.0 mipgap=1.0e-9 timing=1';
+solve;
+display z;
+display x;
+display {j in Camps : y[j] > 0} y[j];

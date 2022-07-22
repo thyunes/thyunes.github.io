@@ -1,0 +1,57 @@
+
+CuSPLIB News and Update Log:
+---------------------------
+
+04/19/11:
+--------
+
+* We are proud to announce that three instances from CuSPLIB have been accepted into MIPLIB 2010!
+  They are: csched007, csched008, csched010.
+  For more information, consult the MIPLIB web site at http://miplib.zib.de.
+
+
+11/15/09:
+--------
+
+* Updated time limits to 2 hours (rather than 1), as seems to be the standard
+  practice in other problem libraries and/or benchmark sites.
+
+* Added MIP results for Gurobi 2.0.0.
+
+
+10/11/09:
+--------
+
+* Ran instance 8 of set "10 50 200 25 0 20 10 40 20 75 1 1" for 55 hours trying to
+  find the optimal solution, but there is still a gap. See the min makespan
+  results for details.
+
+
+10/5/09:
+-------
+
+* Updated MIP results to CPLEX version 12.1.0.
+
+
+10/1/09:
+-------
+
+* Increased machine capacity of instance 3 of set 10-50-200-25-0-20-10-40-20-75-1-1
+  to make it feasible (capacity was increased from 25 to 29, which was the smallest
+  feasible value).
+
+* Updated data files, lp files, ZIMPL files, and result files to reflect the above
+  change and the new runs with instance 3.
+
+* Added file cumulative.cpp. This is a C++ program that uses ILOG Concert technology
+  to solve CuSPs with either min makespan or min delay objectives. It reads data
+  files in raw format.
+
+
+9/29/09:
+-------
+
+* CuSPLIB released to the public.
+
+* Wrote blog post about CuSPLIB at http://orbythebeach.wordpress.com.
+

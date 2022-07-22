@@ -1,0 +1,157 @@
+
+SECTION /* Model_Section */
+
+
+  DECLARATION SECTION 
+
+    SET:
+       identifier   :  Lefty
+       indices      :  iL, iLa
+       definition   :  data { Dasher, Prancer, Comet, Donner }
+       comment      :  "The names of the reindeer on the left." ;
+
+    SET:
+       identifier   :  Righty
+       indices      :  iR, iRa
+       definition   :  data { Dancer, Vixen, Cupid, Blitzen } ;
+
+    SET:
+       identifier   :  favRighty
+       index domain :  (iL)
+       subset of    :  Righty
+       order by     :  User
+       definition   :  data {
+                        Dasher   : { Dancer,  Cupid,   Vixen,   Blitzen },
+                        Prancer  : { Vixen,   Blitzen, Dancer,  Cupid   },
+                        Comet    : { Cupid,   Dancer,  Blitzen, Vixen   },
+                        Donner   : { Blitzen, Vixen,   Dancer,  Cupid   } }
+       comment      :  "For each reindeer on the left, an ordered specification of which reindeer it favors to be next to.
+                        The keyword 'user' in the order by attribute indicates that the element ordering is meaningful." ;
+
+    SET:
+       identifier   :  favLefty
+       index domain :  (iR)
+       subset of    :  Lefty
+       order by     :  User
+       definition   :  data {
+                         Dancer  : { Prancer, Comet,   Dasher,  Donner },
+                         Vixen   : { Dasher,  Donner,  Prancer, Comet  },
+                         Cupid   : { Prancer, Dasher,  Comet,   Donner },
+                         Blitzen : { Comet,   Prancer, Donner,  Dasher } }
+       comment      :  "For each reindeer on the right, an ordered specification of which reindeer it favors to be next to." ;
+
+    PARAMETER:
+       identifier   :  rankLefty
+       index domain :  (iL,iR)
+       definition   :  ord(iR,favRighty(iL))
+       comment      :  "An intermediate parameter, translating the ordering in favRighty into numbers." ;
+
+    PARAMETER:
+       identifier   :  rankRighty
+       index domain :  (iR,iL)
+       definition   :  ord(iL,favLefty(iR)) ;
+
+    ELEMENT VARIABLE:
+       identifier   :  rightPartner
+       index domain :  (iL)
+       range        :  Righty
+       comment      :  "For each reindeer on the left, which reindeer on the right will it be pulling the sleigh next to." ;
+
+    ELEMENT VARIABLE:
+       identifier   :  leftPartner
+       index domain :  (iR)
+       range        :  Lefty ;
+
+    CONSTRAINT:
+       identifier   :  MatchEachUniquely
+       definition   :  cp::Channel(
+                               mapBinding        :  iL,
+                               map               :  rightPartner(iL),
+                               inverseMapBinding :  iR,
+                               inverseMap        :  leftPartner(iR))
+       comment      :  "The channel constraint enforces both:
+                        - leftPartner(rightPartner(iL)) = iL for all iL, and
+                        - rightPartner(leftPartner(iR)) = iR for all iR.
+                        
+                        The channel constraint allows us to view the problem equivalently from the left perspective and from the right perspective:
+                        - The left  perspective: the problem is to assign to each reindeer on the left  a reindeer on the right
+                        - The right perspective: the problem is to assign to each reindeer on the right a reindeer on the left.
+                        
+                        The channel constraint is present in many constraint programming systems (though perhaps with different names).
+                        The global constraint catalog provides an overview:
+                           http://www.emn.fr/z-info/sdemasse/gccat/Cinverse.html" ;
+
+    CONSTRAINT:
+       identifier   :  LeftStable
+       index domain :  (iL,iR)
+       definition   :  if rankLefty( iL, iR ) < rankLefty( iL, rightPartner( iL ) ) then
+                          rankRighty( iR, leftPartner( iR ) ) < rankRighty( iR, iL )
+                       endif
+       comment      :  "In a stable solution the following should hold:
+                        for each reindeer on the left iL,
+                            if iL prefers reindeer on the right iR to her currently assigned partner rightPartner( iL ) then
+                            that reindeer iR does NOT prefer iL as her partner on the left." ;
+
+    CONSTRAINT:
+       identifier   :  RightStable
+       index domain :  (iL,iR)
+       definition   :  if rankRighty( iR, iL ) < rankRighty( iR, leftPartner( iR ) ) then
+                          rankLefty( iL, rightPartner( iL ) ) < rankLefty( iL, iR )
+                       endif ;
+
+    MATHEMATICAL PROGRAM:
+       identifier   :  StableReindeerPairings
+       direction    :  minimize
+       constraints  :  AllConstraints
+       variables    :  AllVariables
+       type         :  Automatic ;
+
+    ELEMENT PARAMETER:
+       identifier   :  srp
+       range        :  AllGeneratedMathematicalPrograms ;
+
+    PARAMETER:
+       identifier   :  maxSolutions
+       initial data :  1000 ;
+
+    PARAMETER:
+       identifier   :  noSolutionsFound ;
+
+    SET:
+       identifier   :  solutionSet
+       subset of    :  Integers
+       index        :  s ;
+
+    ELEMENT PARAMETER:
+       identifier   :  variousLeftPartners
+       index domain :  (s,iR)
+       range        :  Lefty ;
+
+    ELEMENT PARAMETER:
+       identifier   :  variousRightPartners
+       index domain :  (s,iL)
+       range        :  Righty ;
+
+  ENDSECTION  ;
+
+  PROCEDURE
+    identifier :  SolveRaindeerPairing
+    body       :  
+      ! Call the CP solver to find all possible solutions and store them in the
+      ! solution repository of the generated mathematical program 'StableReindeerPairings'
+      solve StableReindeerPairings where solution_limit := maxSolutions, time_limit := 10 ;
+      
+      ! Visit each solution in the solution repository of that generated mathematical program
+      ! and store these solutions in element parameters.
+      ! These element parameters can then be displayed in the GUI.
+      srp := 'StableReindeerPairings';
+      solutionSet := gmp::Solution::GetSolutionsSet(srp);
+      for ( s ) do
+              GMP::Solution::SendToModel( srp, s );
+              variousLeftPartners(s,iR)  := leftPartner(iR);
+              variousRightPartners(s,iL) := rightPartner(iL);
+      endfor;
+
+  ENDPROCEDURE  ;
+
+ENDSECTION /* Model_Section */ ;

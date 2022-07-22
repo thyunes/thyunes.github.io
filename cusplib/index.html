@@ -1,0 +1,334 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.4  (Linux)">
+	<META NAME="AUTHOR" CONTENT="Tallys Yunes">
+	<META NAME="CREATED" CONTENT="20090914;15270500">
+	<META NAME="CHANGEDBY" CONTENT="Tallys Yunes">
+	<META NAME="CHANGED" CONTENT="20090916;13101500">
+	<META NAME="CHANGEDBY" CONTENT="Tallys Yunes">
+	<META NAME="CHANGEDBY" CONTENT="Tallys Yunes">
+	<META NAME="CHANGEDBY" CONTENT="Tallys Yunes">
+	<META NAME="CHANGEDBY" CONTENT="Tallys Yunes">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P><BR><BR>
+</P>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=0 CELLSPACING=0>
+	<COL WIDTH=128*>
+	<COL WIDTH=128*>
+	<TR VALIGN=TOP>
+		<TD WIDTH=50%>
+			<P><IMG SRC="near_cusp.gif" NAME="graphics2" ALIGN=BOTTOM WIDTH=487 HEIGHT=490 BORDER=0></P>
+		</TD>
+		<TD WIDTH=50%>
+			<P><FONT SIZE=5><FONT FACE="FreeSans, sans-serif"><B>CuSPLIB:</B></FONT>
+			<FONT FACE="FreeSans, sans-serif">A Library of Single-Machine
+			</FONT><FONT COLOR="#0000ff"><FONT FACE="FreeSans, sans-serif"><B>Cu</B></FONT></FONT><FONT FACE="FreeSans, sans-serif">mulative
+			</FONT><FONT COLOR="#0000ff"><FONT FACE="FreeSans, sans-serif"><B>S</B></FONT></FONT><FONT FACE="FreeSans, sans-serif">cheduling
+			</FONT><FONT COLOR="#0000ff"><FONT FACE="FreeSans, sans-serif"><B>P</B></FONT></FONT><FONT FACE="FreeSans, sans-serif">roblems</FONT></FONT></P>
+			<P><FONT FACE="FreeSans, sans-serif">Consider the following
+			optimization problem: we are given n jobs, a time horizon T, and
+			one machine M with processing capacity Cap &gt;= 2. Each job has a
+			processing time (pj), release date (rj), due date (dj), machine
+			utilization (cj), and weight (wj). We would like to schedule all
+			the jobs on machine M while making sure that: (i) all jobs obey
+			their execution window [rj,dj] (to a certain extent; see possible
+			objectives), and (ii) we respect the machine capacity at all times
+			(i.e., given a time 0 &lt;= t &lt;= T, the sum of cj over all jobs
+			running at time t is always less than or equal to Cap). Possible
+			objective functions are: minimize makespan, minimize total
+			(weighted) tardiness, minimize total number of late jobs, minimize
+			total (weighted) delay, etc.</FONT></P>
+			<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=2><I>(Near cusp
+			image courtesy of <A HREF="http://www.math.harvard.edu/~ctm/">Prof.
+			Curtis T. McMullen</A></I></FONT></FONT><I>)<BR></I><FONT FACE="FreeSans, sans-serif"><FONT SIZE=2><I>(<A HREF="http://en.wikipedia.org/wiki/Cusp_(singularity)">Cusp</A>
+			and <A HREF="http://en.wikipedia.org/wiki/Algebraic_curve">algebraic
+			curve</A> entries on Wikipedia)</I></FONT></FONT></P>
+
+			<br>
+			<P><FONT FACE="FreeSans, sans-serif">
+			<FONT COLOR=red><b><u>WHAT'S NEW?</u></b></FONT>&nbsp;
+			<a href="updates.txt">CuSPLIB Update Log</a>
+			(modified 06/02/11)
+			</FONT></P>
+
+		</TD>
+	</TR>
+</TABLE>
+<P><FONT FACE="FreeSans, sans-serif">Our goal is to provide a library
+of challenging cumulative scheduling problems (CuSPs) that would
+motivate the study, development, and improvement of optimization
+algorithms dedicated to solving these problems. We provide a <A HREF="#Instance Generators|region">random
+instance generator</A>, instances created by this generator, and
+additional instances created by other researchers. (If you'd like to
+contribute instances to CuSPLIB, <A HREF="http://moya.bus.miami.edu/~tallys/contact.php">send
+me an e-mail</A>.) The general (raw) format of our instances is:</FONT></P>
+<P><FONT FACE="FreeSans, sans-serif">n T Cap<BR>pj rj dj cj wj</FONT></P>
+<P><FONT FACE="FreeSans, sans-serif">The first line contains the
+number of jobs (n), time horizon (T), and machine capacity (Cap).
+That line is followed by n lines formatted as the second line above:
+processing time (pj), followed by release date (rj), etc. Our
+<A HREF="#Instance Generators|region">instance generator</A> was
+written in <A HREF="http://www.perl.org/">Perl</A> to facilitate
+execution across platforms. Its usage instructions are printed to the
+screen as shown below:</FONT></P>
+<P><TT><FONT FACE="Courier 10 Pitch"><FONT SIZE=3><SPAN STYLE="font-weight: medium">geninst.pl:
+CuSPLIB Random Instance Generator v1.0<BR><BR>Usage: geninst.pl &lt;m&gt;
+&lt;n&gt; &lt;T&gt; &lt;Cap&gt; &lt;cmin&gt; &lt;cmax&gt; &lt;wmin&gt;
+&lt;wmax&gt; &lt;pmin&gt; &lt;pmax&gt; &lt;mode&gt; <BR>where:<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m
+= number of instances to generate (&lt; 1000) <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n
+= number of jobs <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T
+= length of time horizon <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cap
+= machine capacity <BR>cmin,cmax = job sizes in % of Cap (uniformly
+drawn) <BR>wmin,wmax = job windows in % of T (uniformly drawn)
+<BR>pmin,pmax = job durations in % of their windows (uniformly drawn)
+<BR>emin,emax = job weights (uniformly drawn) <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode
+= type of output (1=ZIMPL, 2=OPL, 3=raw) </SPAN></FONT></FONT></TT>
+</P>
+<P><FONT FACE="FreeSans, sans-serif">Job sizes are uniformly drawn
+between cmin% and cmax% of Cap; the width of job execution windows
+are uniformly drawn between wmin% and wmax% of T; job durations are
+uniformly drawn between pmin% and pmax% of the width of their
+respective execution windows; and job weights are uniformly drawn
+between emin and emax. All parameters are integer numbers. The mode
+parameter indicates the output type: raw is the format described
+above; ZIMPL mode creates a data file suitable for a model written in
+the <A HREF="http://zimpl.zib.de/">ZIMPL language</A> (<A HREF="cusplib.zpl">click
+here</A> for a partial ZIMPL code to read the generated data file);
+similarly, OPL mode creates a data file suitable for a model written in
+the <A HREF="http://www.ilog.com/products/oplstudio/">ILOG OPL
+language</A> (<A HREF="cusplib.mod">click here</A> for a partial OPL
+code to be used with the generated data file).</FONT></P>
+<DIV ID="Instance Generators" DIR="LTR" STYLE="background: transparent"><A NAME="Instance Generators|region"></A>
+	<P><BR><BR>
+	</P>
+	<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Instance
+	Generators</B></FONT></FONT></P>
+</DIV>
+<UL>
+	<LI><P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium"><A HREF="geninst.pl">geninst.pl</A>
+	(version 1.0)<BR>Author: <A HREF="http://moya.bus.miami.edu/~tallys">Tallys
+	Yunes</A><BR>Language: Perl<BR>How to use: see instructions given
+	above</SPAN></FONT></FONT></P>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3>Let
+	me know if you'd like to add your own instance generator to this list (credit
+	will be properly given, of course).</FONT></FONT></P>
+</UL>
+<DIV ID="CuSP Instances" DIR="LTR">
+	<P><BR><BR>
+	</P>
+	<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>CuSP
+	Instances</B></FONT></FONT></P>
+</DIV>
+
+
+	<P STYLE="font-weight: medium"><FONT FACE="FreeSans,sans-serif"> 
+	<FONT SIZE=3>
+	Instances generated with geninst.pl will be indentified by their generation parameters and (optionally) by a random generation seed (to allow for replication).
+	</FONT></FONT></P>
+
+<UL>
+	<LI><P STYLE="font-weight: medium"><FONT FACE="FreeSans,sans-serif"> 
+	<FONT SIZE=3>
+	<u>10 50 200 25 0 20 10 40 20 75 1 1</u>:&nbsp;
+	</FONT></FONT></P>
+	<blockquote>
+	<P STYLE="font-weight: medium"><FONT FACE="FreeSans,sans-serif"> 
+	<FONT SIZE=3>
+	Data:
+	<a href="10 50 200 25 0 20 10 40 20 75 1 1/10 50 200 25 0 20 10 40 20 75 1 1-raw.tgz">
+	raw format</a>,&nbsp;
+	<a href="10 50 200 25 0 20 10 40 20 75 1 1/10 50 200 25 0 20 10 40 20 75 1 1-zimpl.tgz">
+	ZIMPL format</a><br>
+	LP files:
+	<a href="10 50 200 25 0 20 10 40 20 75 1 1/MIP/10 50 200 25 0 20 10 40 20 75 1 1-makespan-lp.tgz">
+	min makespan</a>,&nbsp;
+	<a href="10 50 200 25 0 20 10 40 20 75 1 1/MIP/10 50 200 25 0 20 10 40 20 75 1 1-mindelay-lp.tgz">
+	min delay</a><p>
+	<b>Solution method:</b> integer programming, time-indexed formulation (see below)<br>
+	Solver: CPLEX 12.1.0, default behavior<br>
+	Results: 
+        <a href="10 50 200 25 0 20 10 40 20 75 1 1/MIP/10 50 200 25 0 20 10 40 20 75 1 1-makespan.txt">min makespan</a>,&nbsp;
+        <a href="10 50 200 25 0 20 10 40 20 75 1 1/MIP/10 50 200 25 0 20 10 40 20 75 1 1-mindelay.txt">min delay</a><br>
+	<blockquote>
+	Even with this limited set of instances, we can see that there is a lot of room for improvement: better formulations, cutting planes, better tweaking of CPLEX parameters, other technologies (e.g. constraint programming), etc. The main weakness of the time-indexed formulation is the rapid increase in the number of variables as the time horizon expands. A 200-unit time horizon can be problematic, even with only 50 jobs. The root lower bounds for the makespan objective are very tight, but that doesn't carry over to the minimum delay objective. Recent research by Coban and Hooker (ISMP 2009) shows that a decomposition approach that splits the time horizon into more manageable windows performs significantly better. Nevertheless, many questions still remain unanswered: is the time-indexed formulation hopeless? Can it be made competitive through the addition of cutting planes and/or smarter branching strategies? Do we absolutely need decomposition? Can we invent a better MIP model for this problem? <font color=red>One of the goals of CuSPLIB is to motivate research on these and related topics.</font><p>
+	</blockquote>
+
+	<b>Solution method:</b> constraint programming<br>
+	Solver: Comet 2.0.0, default behavior (using Scheduler and the setTimes search heuristic)<br>
+	Model files (read raw data files):
+	<a href="makespan.co">min makespan</a>,&nbsp;
+        <a href="mindelay.co">min delay</a><br>
+	Results:
+        <a href="10 50 200 25 0 20 10 40 20 75 1 1/CP/10 50 200 25 0 20 10 40 20 75 1 1-makespan.txt">min makespan</a>,&nbsp;
+        <a href="10 50 200 25 0 20 10 40 20 75 1 1/CP/10 50 200 25 0 20 10 40 20 75 1 1-mindelay.txt">min delay</a><br>
+	<blockquote>
+	For the makespan objective, it looks like CP has an easier time than MIP does in this set of instances. Comet found a solution of value 173 to instance 8 within two hours, but did not prove optimality (it also found 13 other feasible solutions with worse objective values). Note that the MIP model above didn't find a single feasible solution to instance 8 within two hours. Perhaps the lack of a good primal heuristic is hurting MIP here? Can we think of an MIP branching scheme that would try to mimic setTimes? Why is instance 8 so much harder than the others? Can we generate some more like it?<p>
+
+	For the min delay objective, CP's advantage disappears (as expected, since this objective allows for much less propagation than the makespan). Out of the 10 instances, the MIP model finds the optimal solution to 8 of them within two hours. The CP model only proves optimality in 3 cases. Out of the 2 instances to which neither approach found an optimal solution, MIP wins once (instances 10) and CP wins once (instance 7). Can we find a variable/value selection heuristic that works better than setTimes for the min delay objective and still guarantees that we'll find an optimal solution? How about combining CP and MIP into a hybrid model?<p>
+	</blockquote>
+
+	<b>Solution method:</b> integer programming, time-indexed formulation (see below)<br>
+	Solver: Gurobi 2.0.0, default behavior<br>
+	Results: 
+        <a href="10 50 200 25 0 20 10 40 20 75 1 1/MIP/10 50 200 25 0 20 10 40 20 75 1 1-makespan2.txt">min makespan</a>,&nbsp;
+        <a href="10 50 200 25 0 20 10 40 20 75 1 1/MIP/10 50 200 25 0 20 10 40 20 75 1 1-mindelay2.txt">min delay</a><br>
+	<blockquote>
+	For the makespan objective, Gurobi and CPLEX have a similar performance on 7 of the 10 instances. For instance 3, Gurobi finds the optimal solution in less than a tenth of the time required by CPLEX. On the other hand, Gurobi does not find the optimal solution to instance 4 within two hours, whereas CPLEX does it in under 5 minutes. When it comes to instance 8 (apparently, the toughest), although neither code can find prove optimality within 2 hours, Gurobi finds a feasible solution quickly (6 sec.) and closes the gap down to 0.58% (recall that CPLEX cannot find a feasible solution to this instance within 2 hours).<p>
+
+	For the min delay objective, performance is also largely similar. Gurobi does not find the optimal solution to instance 4, but CPLEX does. Although neither code finds a provably optimal solution to instance 7, Gurobi's gap after 2 hours (3.41%) is much better than CPLEX's (19.96%).<p>
+	</blockquote>
+
+<br>
+
+	</FONT></FONT></P>
+	</blockquote>
+
+	<LI><P STYLE="font-weight: medium"><FONT FACE="FreeSans,
+	sans-serif"><FONT SIZE=3>Can we find more instances that are challenging
+        for <b>both</b> MIP and CP approaches?</FONT></FONT></P>
+
+	<LI><P STYLE="font-weight: medium"><FONT FACE="FreeSans,
+	sans-serif"><FONT SIZE=3>More instances to
+	appear. Feel free to contribute some!</FONT></FONT></P>
+</UL>
+<DIV ID="Integer Programming Formulations for CuSPs" DIR="LTR">
+	<P><BR><BR>
+	</P>
+	<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Integer
+	Programming Formulations for CuSPs</B></FONT></FONT></P>
+</DIV>
+<P STYLE="font-weight: medium"><FONT SIZE=4><FONT FACE="FreeSans, sans-serif"><U>Time-Indexed
+Formulation</U></FONT><SPAN STYLE="text-decoration: none"><FONT FACE="FreeSans, sans-serif">:</FONT></SPAN></FONT></P>
+<P STYLE="font-weight: medium; text-decoration: none"><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3>One
+of the most popular formulations of CuSPs discretizes the time
+horizon into time units:
+</FONT></FONT></P>
+<center>
+<IMG SRC="time-indexed.png" ALIGN=BOTTOM BORDER=0>
+</center>
+<P></P>
+
+<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium">
+C++ program using ILOG Concert technology:&nbsp;
+<A HREF="cumulative.cpp">cumulative.cpp</A>.
+This program reads data files in the raw format and implements both the min makespan and min delay
+objectives (selected through a command-line parameter; see source file for details).
+It is also set up to output the model in .LP format into a file called cumulative.lp.
+</SPAN></FONT></FONT></P>
+
+<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium">
+ZIMPL models:&nbsp;
+<A HREF="csched1-makespan.zpl">minimize makespan</A>,&nbsp;
+<A HREF="csched1-mindelay.zpl">minimize total weighted delay</A>.
+These models assume that the data
+file is called csched.dat. To generate the corresponding LP file
+(suitable for use with most modern IP solvers), simply run the
+following command (replacing "model.zpl" by the appropriate file name):
+<FONT FACE="Courier 10 Pitch"><FONT SIZE=3>zimpl model.zpl</FONT></FONT>.
+</SPAN></FONT></FONT></P>
+
+<br>
+
+<P STYLE="font-weight: medium"><FONT SIZE=4><FONT FACE="FreeSans, sans-serif"><U>
+Event-Based Formulations</U>
+</FONT><SPAN STYLE="text-decoration: none"><FONT FACE="FreeSans, sans-serif">:</FONT></SPAN></FONT></P>
+<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium">
+These formulations try to overcome the variable explosion of the time-indexed formulation by using the concept of "events" (e.g. the start and end of a job) and by avoiding time-related subscripts. However, this usually comes at the expense of weaker linear relaxations (more details to come).
+</SPAN></FONT></FONT></P>
+
+
+<DIV ID="Frequently Asked Questions" DIR="LTR">
+	<P><BR><BR>
+	</P>
+	<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Frequently
+	Asked Questions</B></FONT></FONT></P>
+</DIV>
+<OL>
+	<LI><P><FONT SIZE=3><FONT FACE="FreeSans, sans-serif"><B>I don't
+	like your instance generator. Do you mind if I modify it?<BR><BR></B></FONT><FONT FACE="FreeSans, sans-serif"><SPAN STYLE="font-weight: medium">Of
+	course not! Modifications and improvements are very welcome. Please
+	send me the modified code so that I can make it available on this
+	web site. If you have your own instance generator, I hope you'll be
+	willing to share it with us.</SPAN></FONT></FONT></P>
+	<LI><P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><B>I've
+	generated some CuSP instances that seem to be pretty tough to solve.
+	How do I share them with other people?</B></FONT></FONT><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium"><BR><BR>If
+	you format your instances according to our raw file format and <A HREF="http://moya.bus.miami.edu/~tallys/contact.php">send
+	them to me</A>, I'll be happy to add them to CuSPLIB. After all,
+	that's the whole point of this initiative! Please let me know how
+	they were generated. If you used an instance generator posted on
+	this web site, let me know what parameter values were used when
+	generating the instances (if you can make your instance generator
+	available, that's even better).</SPAN></FONT></FONT></P>
+	<LI><P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><B>I've
+	improved some of the results published on CuSPLIB. How do I get
+	credit for it?<BR><BR></B></FONT></FONT><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium">That's
+	great! If you've found a better feasible solution, please <A HREF="http://moya.bus.miami.edu/~tallys/contact.php">send
+	me</A> the solution and its objective value. If you've improved a
+	lower bound, just let me know what the new bound is. In both cases,
+	it would be great if you could also provide some documentation
+	explaining the methodology/algorithms used.</SPAN></FONT></FONT></P>
+	<LI><P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><B>How do I
+	cite CuSPLIB?<BR><BR></B></FONT></FONT><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium">You
+	can use the following BibTeX entry:<BR><BR></SPAN></FONT></FONT><TT><FONT FACE="Courier 10 Pitch"><FONT SIZE=3><SPAN STYLE="font-weight: medium">@Misc{cusplib,<BR>&nbsp;&nbsp;&nbsp;&nbsp;author
+	= {T. Yunes},<BR>&nbsp;&nbsp;&nbsp;&nbsp;title = {{CuSPLIB} 1.0: A
+	Library of Single-Machine Cumulative Scheduling
+	P</SPAN></FONT></FONT></TT><TT><SPAN STYLE="text-decoration: none"><FONT FACE="Courier 10 Pitch"><FONT SIZE=3><SPAN STYLE="font-weight: medium">roblems}</SPAN></FONT></FONT></SPAN></TT><TT><FONT FACE="Courier 10 Pitch"><FONT SIZE=3><SPAN STYLE="font-weight: medium">,<BR>&nbsp;&nbsp;&nbsp;&nbsp;howpublished
+	= {{\tt http://moya.bus.miami.edu/\raisebox{-0.6ex}{\~{
+	}}tallys/cusplib/}},<BR>&nbsp;&nbsp;&nbsp;&nbsp;year = {2009},<BR>}</SPAN></FONT></FONT></TT></P>
+</OL>
+<DIV ID="Comments and Feedback" DIR="LTR">
+	<P><BR><BR>
+	</P>
+	<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>Comments
+	and Feedback</B></FONT></FONT></P>
+</DIV>
+<P><TT><FONT FACE="FreeSans, sans-serif"><FONT SIZE=3><SPAN STYLE="font-weight: medium">I
+hope that CuSPLIB can become a useful resource to the academic
+community. Regardless of whether you're working on Integer
+Programming, Constraint Programming, heuristic, or hybrid methods for
+cumulative scheduling, this web site could become a meeting point
+where we exchange ideas and results with the common goal of advancing
+the state-of-the-art on CuSPs. Your comments, suggestions and
+feedback are always welcome. Feel free to <A HREF="http://moya.bus.miami.edu/~tallys/contact.php">drop
+me a line</A>.</SPAN></FONT></FONT></TT></P>
+<DIV ID="To Appear" DIR="LTR">
+	<P><BR><BR>
+	</P>
+	<P><FONT FACE="FreeSans, sans-serif"><FONT SIZE=4 STYLE="font-size: 16pt"><B>To
+	Appear...</B></FONT></FONT></P>
+</DIV>
+<UL>
+	<LI><P><FONT FACE="FreeSans, sans-serif">more integer programming models
+	for CuSPs</FONT></P>
+	<LI><P><FONT FACE="FreeSans, sans-serif">more CuSP
+	instances</FONT></P>
+	<LI><P><FONT FACE="FreeSans, sans-serif">list of references</FONT></P>
+</UL>
+
+<hr>
+
+<div id="eXTReMe"><a href="http://extremetracking.com/open?login=cusplib">
+<img src="http://t1.extreme-dm.com/i.gif" style="border: 0;"
+height="38" width="41" id="EXim" alt="eXTReMe Tracker" /></a>
+<script type="text/javascript"><!--
+var EXlogin='cusplib' // Login
+var EXvsrv='s11' // VServer
+EXs=screen;EXw=EXs.width;navigator.appName!="Netscape"?
+EXb=EXs.colorDepth:EXb=EXs.pixelDepth;EXsrc="src";
+navigator.javaEnabled()==1?EXjv="y":EXjv="n";
+EXd=document;EXw?"":EXw="na";EXb?"":EXb="na";
+EXd.write("<img "+EXsrc+"=http://e2.extreme-dm.com",
+"/"+EXvsrv+".g?login="+EXlogin+"&amp;",
+"jv="+EXjv+"&amp;j=y&amp;srw="+EXw+"&amp;srb="+EXb+"&amp;",
+"l="+escape(EXd.referrer)+" height=1 width=1>");//-->
+</script><noscript><div id="neXTReMe"><img height="1" width="1" alt=""
+src="http://e2.extreme-dm.com/s11.g?login=cusplib&amp;j=n&amp;jv=n" />
+</div></noscript></div>
+
+</BODY>
+</HTML>

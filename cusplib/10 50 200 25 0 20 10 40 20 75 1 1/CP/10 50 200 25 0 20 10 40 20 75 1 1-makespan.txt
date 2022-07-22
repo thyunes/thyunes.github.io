@@ -1,0 +1,25 @@
+
+Instance generator: geninst.pl
+Instance parameters: 10 50 200 25 0 20 10 40 20 75 1 1
+Objective: makespan
+Technique: CP (Comet 2.0.0)
+Time limit: 2h
+
+ Id       OBJ       Fails     Time
+  1       185           0     0.00
+  2       184           0     0.00
+  3*      183     2421151   174.00
+  4       179          88     0.00
+  5       173           0     0.00
+  6       185           0     0.00
+  7       188          28     0.00
+  8       173    91853244  7200.00
+  9       181           0     0.00
+ 10       170         120     0.00
+
+OBJ = best feasible solution value (optimality proved if Time < 2h)
+      A dash "-" means no feasible solution was found
+Fails = number of failures during search
+Time given in seconds on a Pentium 4, 3.8Ghz, 4GB RAM, under GNU/Linux
+
+* NOTE: Instance 3 had to have its machine capacity raised to 29 to become feasible.

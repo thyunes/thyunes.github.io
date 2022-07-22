@@ -1,0 +1,28 @@
+
+Instance generator: geninst.pl
+Instance parameters: 10 50 200 25 0 20 10 40 20 75 1 1
+Objective: mindelay
+Technique: MIP (Gurobi 2.0.0)
+Time limit: 2h
+
+ Id       RLB       BLB       BUB  GAP(%)     Nodes     Time
+  1   127.800   151.000   151.000    0.00       817     2.49
+  2   113.867   150.000   150.000    0.00     11592    43.86
+  3*  234.175   317.000   317.000    0.00     24189   112.70
+  4   220.217   253.000   284.000   10.92   3424274  7200.00
+  5    53.650    74.000    74.000    0.00       673     1.74
+  6   265.475   326.000   326.000    0.00   2125903  5108.57
+  7   269.252   340.000   352.000    3.41   2540434  7200.00
+  8   203.692   258.000   258.000    0.00    590170  1201.84
+  9   184.083   237.000   237.000    0.00    368256   381.82
+ 10   332.423   403.000   408.000    1.23   1678634  7200.00
+
+inf = infinity
+RLB = lower bound at root node
+BLB = best known lower bound
+BUB = best known upper bound; equal to "?" if no feasible solution found
+GAP(%) = (BUB-BLB)/BUB; equal to "-" when infeasible
+Time given in seconds on a Pentium 4, 3.8Ghz, 4GB RAM, under GNU/Linux
+
+* NOTE: Instance 3 had to have its machine capacity raised to 29 to become feasible.
+

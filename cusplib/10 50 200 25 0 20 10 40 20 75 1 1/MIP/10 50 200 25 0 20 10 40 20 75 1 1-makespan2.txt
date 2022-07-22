@@ -1,0 +1,28 @@
+
+Instance generator: geninst.pl
+Instance parameters: 10 50 200 25 0 20 10 40 20 75 1 1
+Objective: makespan
+Technique: MIP (Gurobi 2.0.0)
+Time limit: 2h
+
+ Id       RLB       BLB       BUB  GAP(%)     Nodes     Time
+  1   185.000   185.000   185.000    0.00        64     1.46
+  2   184.000   184.000   184.000    0.00       104     1.79
+  3*  178.000   183.000   183.000    0.00     43977   124.87
+  4   179.000   179.000   180.000    0.56   6196520  7200.00
+  5   173.000   173.000   173.000    0.00         0     0.86
+  6   185.000   185.000   185.000    0.00       200     1.36
+  7   188.000   188.000   188.000    0.00       986     3.48
+  8   171.000   172.000   173.000    0.58   3228664  7200.00
+  9   181.000   181.000   181.000    0.00       101     1.87
+ 10   170.000   170.000   170.000    0.00    180017   216.15
+
+inf = infinity
+RLB = lower bound at root node
+BLB = best known lower bound
+BUB = best known upper bound; equal to "?" if no feasible solution found
+GAP(%) = (BUB-BLB)/BUB; equal to "-" when infeasible
+Time given in seconds on a Pentium 4, 3.8Ghz, 4GB RAM, under GNU/Linux
+
+* NOTE: Instance 3 had to have its machine capacity raised to 29 to become feasible.
+

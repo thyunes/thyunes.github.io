@@ -1,0 +1,71 @@
+param Mymiles;
+set Magazines;
+param Issues{Magazines};
+param Miles{Magazines};
+
+var x{Magazines} binary;  # whether or not magazine i is bought
+
+maximize z: sum {i in Magazines} Issues[i]*x[i];            # get as many issues as possible
+#maximize z: sum {i in Magazines} x[i];                     # get as many subscriptions as possible
+#minimize z: Mymiles - sum {i in Magazines} Miles[i]*x[i];  # use as many miles as possible
+
+subject to
+
+knapsack: sum {i in Magazines} Miles[i]*x[i] <= Mymiles;
+
+# Here are some side constraints you could use
+#oneEssence: x["Essence"] + x["Essence 2yrs"] <= 1;
+#no3Golf:    x["Golf Digest"] + x["Golf Magazine"] + x["Golfweek"] <= 2;
+#beSmart:    x["Sports Illustrated"] + x["Golf Magazine"] + x["SI and Golf Mag"] <= 1;
+#noPaper:    x["The Wall Street Journal"] = 0;
+#getNine:    sum {i in Magazines} x[i] = 9;
+
+data;
+
+param Mymiles := 4735;
+
+set Magazines := "Afar" "Architectural Digest" "Barron's" "Business Week" "Cat Fancy"              
+"Cigar Aficionado" "Daily Variety" "Diabetes Forecast" "ESPN the Magazine" "Ebony and Jet"
+"Elle" "Entertainment Weekly" "Essence" "Essence 2yrs" "Fortune" "Golf Digest"
+"Golf Magazine" "Golfweek" "Martha Stewart Living" "Money" "New York Magazine"
+"Sports Illustrated" "SI and Golf Mag" "Sports Illustrated KIDS" "The Economist"
+"The Wall Street Journal" "US News & World Report" "Variety" "Wine Spectator" "Wired";                  
+
+param:                     Issues  Miles :=
+"Afar"                          6    600 
+"Architectural Digest"         12    800 
+"Barron's"                     26   1700 
+"Business Week"                50   1600 
+"Cat Fancy"                    12    500 
+"Cigar Aficionado"              6    400 
+"Daily Variety"               252   5500 
+"Diabetes Forecast"            12    500 
+"ESPN the Magazine"            26    500 
+"Ebony and Jet"                38    800 
+"Elle"                         12    400 
+"Entertainment Weekly"         55   1300 
+"Essence"                      12    500 
+"Essence 2yrs"                 24    800 
+"Fortune"                      25   1400 
+"Golf Digest"                  12    700 
+"Golf Magazine"                12    700 
+"Golfweek"                     45   1300 
+"Martha Stewart Living"        24   1400 
+"Money"                        12    800 
+"New York Magazine"            46    700 
+"Sports Illustrated"           56   1400 
+"SI and Golf Mag"              68   1500 
+"Sports Illustrated KIDS"      12   1000 
+"The Economist"                51   3200 
+"The Wall Street Journal"     190   2800 
+"US News & World Report"       12    700 
+"Variety"                      50   5500 
+"Wine Spectator"               15    900 
+"Wired"                        12    400;
+
+option solver cplex;
+option cplex_options 'absmipgap=0.0 mipgap=1.0e-9 timing=1';
+solve;
+display z;
+display {i in Magazines : x[i] > 0} (x[i], Issues[i], Miles[i]);
+printf "Unused miles: %d\n\n", knapsack.slack;
