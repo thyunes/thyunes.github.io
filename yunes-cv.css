@@ -129,7 +129,19 @@ div.abstract {width:100%;}
 .paragraphToc, .likeparagraphToc {margin-left:3em;}
 .subparagraphToc, .likesubparagraphToc {margin-left:4em;}
 .rotatebox{display: inline-block;}
-dl.enumerate-enumitem{display:grid; grid-template-columns: 3ch 1fr; align-items: top; row-gap:1ch;}
+
+dl.enumerate-enumitem {
+    display: grid;
+    grid-template-columns: 3ch 1fr;
+    column-gap: 0.5em;
+    row-gap: 0;
+    margin-left: 2em;
+}
+
+dl.enumerate-enumitem dd {
+    margin-inline-start: 0;
+}
+
 span#textcolor1{color:#0000FF}
 span#textcolor2{color:#000000}
 span#textcolor3{color:#000000}
