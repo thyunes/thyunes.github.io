@@ -142,6 +142,10 @@ dl.enumerate-enumitem dd {
     margin-inline-start: 0;
 }
 
+dl.enumerate-enumitem dt {
+    text-align: right;
+}
+
 span#textcolor1{color:#0000FF}
 span#textcolor2{color:#000000}
 span#textcolor3{color:#000000}
