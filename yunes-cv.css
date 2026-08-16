@@ -133,7 +133,7 @@ div.abstract {width:100%;}
 dl.enumerate-enumitem {
     display: grid;
     grid-template-columns: 3ch 1fr;
-    column-gap: 0.5em;
+    column-gap: 0.1em;
     row-gap: 0;
     margin-left: 2em;
 }
